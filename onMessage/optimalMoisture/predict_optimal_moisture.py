@@ -1,6 +1,9 @@
 from model1.inference import inference
 
 def predict_optimal_moisture(payload):
+    """
+    Function to predict the optimal moisture level based on the given conditions.
+    """
    
     conditions = {
         "temperature": payload.get("temperature"),

@@ -1,6 +1,6 @@
 import random
 
-def get_moisture_threshold(conditions):
+def get_threshold(conditions):
     """
     Get the moisture threshold based on the given conditions.
     

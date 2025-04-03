@@ -9,7 +9,9 @@ def run():
     
     while True:
         try:
-            subscribe(client, "python/mqtt", on_message)
+            subscribe(client, "mqtt/check_moisture")
+            subscribe(client, "mqtt/get_optimal_moisture")
+            subscribe(client, "mqtt/water_quantity")
             time.sleep(1)  # Prevents excessive CPU usage
         except KeyboardInterrupt:
             print("Stopping MQTT client...")
