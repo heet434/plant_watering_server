@@ -1,8 +1,5 @@
 from paho.mqtt import client as mqtt_client
-from config import broker, port, username, password
 from onMessage.onMessage import on_message
-import random
-import time
 
 # def on_message(client, userdata, msg):
 #         returnObject = {

@@ -1,36 +1,57 @@
-# Send water quantity data to the mongodb database
+# Send water quantity data to the database
 
-from pymongo import MongoClient
-from config import mongo_uri, mongo_db, mongo_collection
+# from pymongo import MongoClient
+# from config import mongo_uri, mongo_db, mongo_collection
+
+# Use sqlite3 to store the data
+import sqlite3
 
 def send_water_quantity_data(payload):
     """
-    Function to send water quantity data to the MongoDB database.
+    Function to send water quantity data to the database.
     """
-    # Assuming you have a MongoDB client and database set up
-    # Connect to MongoDB
-    client = MongoClient(mongo_uri)
-    db = client[mongo_db]
-    collection = db[mongo_collection]
-
+    
+    # Connect to the SQLite database
+    conn = sqlite3.connect('water_quantity.db')
+    cursor = conn.cursor()
+    # Create the table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS water_quantity (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            water_quantity REAL,
+            temp REAL,
+            humidity REAL,
+            pH REAL,
+            nitrogen REAL,
+            plant_id TEXT,
+            initial_moisture REAL,
+            optimal_moisture REAL
+        )
+    ''')
+    # Commit the changes
+    conn.commit()
+    
     # Prepare the data to be inserted
     data = {
         "water_quantity": payload.get("water_quantity"),
-        "session_id": payload.get("session_id")
+        "temp": payload.get("temp"),
+        "humidity": payload.get("humidity"),
+        "pH": payload.get("pH"),
+        "nitrogen": payload.get("nitrogen"),
+        "plant_id": payload.get("plant_id"),
+        "initial_moisture": payload.get("initial_moisture"),
+        "optimal_moisture": payload.get("optimal_moisture")
     }
-
-    # Find the document with the same session_id
-    existing_document = collection.find_one({"session_id": data["session_id"]})
-    if existing_document:
-        # Update the existing document with the new water quantity
-        collection.update_one(
-            {"session_id": data["session_id"]},
-            {"$set": {"water_quantity": data["water_quantity"]}}
-        )
-        print(f"Updated document with session_id {data['session_id']}")
-    
-    else:
-        print(f"Session ID {data['session_id']} not found in the database.")
         
-    client.close()
+    # Insert the data into the database
+    cursor.execute('''
+        INSERT INTO water_quantity (water_quantity, temp, humidity, pH, nitrogen, plant_id, initial_moisture, optimal_moisture)
+        VALUES (?, ?, ?, ?, ?, 
+    ''', (data["water_quantity"], data["temp"], data["humidity"], data["pH"], data["nitrogen"], data["plant_id"], data["initial_moisture"], data["optimal_moisture"]))
+    # Commit the changes
+    conn.commit()
+    # Close the connection
+    conn.close()
     
+    # return the inserted data
+    return data
