@@ -25,7 +25,7 @@ def send_water_quantity_data(payload):
             nitrogen REAL,
             plant_id TEXT,
             initial_moisture REAL,
-            optimal_moisture REAL
+            soil_moisture_now REAL
         )
     ''')
     # Commit the changes
@@ -40,14 +40,14 @@ def send_water_quantity_data(payload):
         "nitrogen": payload.get("nitrogen"),
         "plant_id": payload.get("plant_id"),
         "initial_moisture": payload.get("initial_moisture"),
-        "optimal_moisture": payload.get("optimal_moisture")
+        "soil_moisture_now": payload.get("soil_moisture_now")
     }
         
     # Insert the data into the database
     cursor.execute('''
-        INSERT INTO water_quantity (water_quantity, temp, humidity, pH, nitrogen, plant_id, initial_moisture, optimal_moisture)
-        VALUES (?, ?, ?, ?, ?, 
-    ''', (data["water_quantity"], data["temp"], data["humidity"], data["pH"], data["nitrogen"], data["plant_id"], data["initial_moisture"], data["optimal_moisture"]))
+        INSERT INTO water_quantity (water_quantity, temp, humidity, pH, nitrogen, plant_id, initial_moisture, soil_moisture_now)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (data["water_quantity"], data["temp"], data["humidity"], data["pH"], data["nitrogen"], data["plant_id"], data["initial_moisture"], data["soil_moisture_now"]))
     # Commit the changes
     conn.commit()
     # Close the connection
