@@ -8,12 +8,14 @@ def connect_mqtt():
     def on_connect(client, userdata, flags, rc):
         if rc == 0:
             print("=====================")
+            print("=====================")
+            print("=====================")
             print("Connected to MQTT Broker!")
             print("=====================")
         else:
-            print("!!!!!!!!!!!!!!!!!!!!")
+            print("!!!!!!!!!!!!!!!!!!!!!!")
             print("Failed to connect, return code %d\n", rc)
-            print("!!!!!!!!!!!!!!!!!!!!")
+            print("!!!!!!!!!!!!!!!!!!!!!!")
             
     client_id = f'python-mqtt-{random.randint(0, 1000)}'
 
