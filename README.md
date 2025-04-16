@@ -46,11 +46,13 @@ This project implements a smart, automated plant watering system using an IoT de
    python server.py
    ```
 
+5. **Client side - ESP32 (upide)**
+   Run the .py file in upide. It contains the code for reading the soil moisture sensor data and then after processing, publishes data to the MQTT broker on the topics "mqtt/get_optimal_moisture" and "mqtt/moisture_alert" and subscribes to another topic from the other client to get the optimal threshold. It has scheduled times for reading 3 times a day. 
+
 ## 📡 IoT Device
 
 - **Platform**: M5Stack Core2
 - **Firmware**: MicroPython
-- **Communication**: MQTT via `umqtt.simple` or `umqtt.robust`
 - **Broker**: EMQX Cloud
 
 The IoT device reads the soil moisture sensor, publishes the readings via MQTT, and receives watering commands from the backend.
