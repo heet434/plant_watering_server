@@ -6,6 +6,8 @@ def publish(client: mqtt_client, topic: str, message: str):
     """
     try:
         client.publish(topic, message)
+        print("=====================")
         print(f"Published `{message}` to `{topic}` topic")
+        print("=====================")
     except Exception as e:
         print(f"Failed to publish message: {e}")

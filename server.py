@@ -14,6 +14,9 @@ def run():
             subscribe(client, "mqtt/get_water_quantity")
             time.sleep(1)  # Prevents excessive CPU usage
         except KeyboardInterrupt:
+            print("=====================")
+            print("=====================")
+            print("=====================")
             print("Stopping MQTT client...")
             client.loop_stop()
             client.disconnect()
