@@ -22,21 +22,27 @@ def on_message(client: mqtt_client, userData, msg: str):
         print(f"Received moisture alert message: {payload}")
         print("---------------------")
         print(f'Stopping water supply for plant: {payload["plant_id"]}')
-        print(f"Current soil moisture: {payload['soil_moisture_now']}")
-        print(f"Water quantity used: {payload['water_quantity']}")
+        print(f"Current soil moisture: {payload['soil_moisture_now']}%")
+        print(f"Water quantity used: {payload['water_quantity']} ml")
         sent_data = send_water_quantity_data(payload)
         print("Saved water quantity data in db")
         print("=====================")
     elif msg.topic == "mqtt/get_optimal_moisture":
         print("=====================")
-        print(f"Current moisture level: {payload['soil_moisture_now']}")
+        print(f"Current moisture level: {payload['soil_moisture_percent']}%")
         optimal_moisture = predict_optimal_moisture(payload)
         print(f"Predicted optimal moisture level: {optimal_moisture}")
-        optimal_moisture = str(optimal_moisture)
-        if optimal_moisture > payload['soil_moisture_now']:
-            print(f"Watering plant: {payload['plant_id']}")
+        # Confirm if both the predicted and current moisture levels are in percentage and float
+        if isinstance(optimal_moisture, float) and isinstance(payload['soil_moisture_percent'], float):
+            optimal_moisture = round(optimal_moisture, 2)
+            payload['soil_moisture_percent'] = round(payload['soil_moisture_percent'], 2)
+            if optimal_moisture > payload['soil_moisture_percent']:
+                print(f"Watering plant: {payload['plant_id']}")
+            else:
+                print("Plant conditions fine.")
         else:
-            print("Plant conditions fine.")
+            print("Invalid data types for moisture levels. Expected float values.")
+        optimal_moisture = str(optimal_moisture)
         publish(client, "mqtt/optimal_moisture_threshold", optimal_moisture)
         print("=====================")
     elif msg.topic == "mqtt/get_water_quantity":

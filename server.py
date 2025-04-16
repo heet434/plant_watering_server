@@ -1,3 +1,5 @@
+import warnings
+warnings.filterwarnings("ignore")
 import time
 from connect import connect_mqtt
 from subscribe import subscribe
