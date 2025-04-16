@@ -1,3 +1,7 @@
+
+![PHOTO-2025-04-16-18-27-36](https://github.com/user-attachments/assets/8d950d0e-1d4e-4203-9a91-7d66a9c02429)
+
+
 # 🌱 vruksh.aiot - Automated Plant Watering System
 
 This project implements a smart, automated plant watering system using an IoT device and a Python-based backend. The system uses sensor data to predict and manage optimal watering quantities for plants, helping ensure efficient water usage.
@@ -57,3 +61,8 @@ The IoT device reads the soil moisture sensor, publishes the readings via MQTT, 
 - Smart water quantity prediction using trained ML models
 - MQTT-based bi-directional communication
 - Local database logging of water dispensed
+  
+![PHOTO-2025-04-16-18-24-28](https://github.com/user-attachments/assets/e6ca8af1-5f55-425b-a140-e67fa9635b52)
+![PHOTO-2025-04-16-18-29-39](https://github.com/user-attachments/assets/0d54abc0-6fef-41a2-9ce8-fb48e7e66ae8)
+
+
